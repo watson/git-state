@@ -11,6 +11,13 @@ test('#isGit()', function (t) {
   })
 })
 
+test('#isGitSync()', function (t) {
+  var dir = process.cwd()
+  var result = git.isGitSync(dir)
+  t.equal(result, true)
+  t.end()
+})
+
 test('#check()', function (t) {
   var dir = process.cwd()
   git.check(dir, function (err, result) {

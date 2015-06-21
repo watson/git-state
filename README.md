@@ -39,6 +39,11 @@ git.isGit(path, function (exists) {
 Calls the `callback` with a boolean which is either `true` or `false`
 depending on if the given path contains a git repository.
 
+#### `isGitSync(path)`
+
+Synchronous version of `isGit()` which returns either `true` or `false`
+depending on if the given path contains a git repository.
+
 #### `check(path, callback)`
 
 Will check the state of the git repository at the given `path` and call

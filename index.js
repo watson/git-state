@@ -10,6 +10,10 @@ exports.isGit = function (dir, cb) {
   fs.exists(path.join(dir, '.git'), cb)
 }
 
+exports.isGitSync = function (dir) {
+  return fs.existsSync(path.join(dir, '.git'))
+}
+
 exports.check = function (repo, cb) {
   var next = afterAll(function (err, results) {
     if (err) return cb(err)
