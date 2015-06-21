@@ -6,8 +6,8 @@ var path = require('path')
 var exec = require('child_process').exec
 var afterAll = require('after-all-results')
 
-exports.isGit = function (dir) {
-  return fs.existsSync(path.join(dir, '.git'))
+exports.isGit = function (dir, cb) {
+  fs.exists(path.join(dir, '.git'), cb)
 }
 
 exports.check = function (repo, cb) {

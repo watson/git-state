@@ -18,7 +18,9 @@ var git = require('git-state')
 
 var path = '/path/to/git/repo'
 
-if (git.isGit(path)) {
+git.isGit(path, function (exists) {
+  if (!exists) return
+
   git.check(path, function (err, result) {
     if (err) throw err
     console.log(result) // => { branch: 'master',
@@ -27,15 +29,15 @@ if (git.isGit(path)) {
                         //      untracked: 1,
                         //      issues: true }
   })
-}
+})
 ```
 
 ## API
 
-#### `isGit(path)`
+#### `isGit(path, callback)`
 
-Returns either `true` or `false` if the given path contains a git
-repository.
+Calls the `callback` with a boolean which is either `true` or `false`
+depending on if the given path contains a git repository.
 
 #### `check(path, callback)`
 

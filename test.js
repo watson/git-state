@@ -5,9 +5,10 @@ var git = require('./')
 
 test('#isGit()', function (t) {
   var dir = process.cwd()
-  var result = git.isGit(dir)
-  t.equal(result, true)
-  t.end()
+  git.isGit(dir, function (exists) {
+    t.equal(exists, true)
+    t.end()
+  })
 })
 
 test('#check()', function (t) {
