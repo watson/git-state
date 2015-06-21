@@ -39,7 +39,7 @@ var status = function (repo, cb) {
   exec('git status -s', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(err)
     var status = { dirty: 0, untracked: 0 }
-    stdout.trim().split(os.EOL).forEach(function (file) {
+    stdout.trim().split(os.EOL).filter(truthy).forEach(function (file) {
       if (file.substr(0, 2) === '??') status.untracked++
       else status.dirty++
     })
@@ -62,4 +62,8 @@ var ahead = function (repo, cb) {
     stdout = stdout.trim()
     cb(null, !stdout ? 0 : parseInt(stdout.split(os.EOL).length, 10))
   })
+}
+
+var truthy = function (obj) {
+  return !!obj
 }
