@@ -14,12 +14,12 @@ npm install git-state
 ## Usage
 
 ```js
-var gitState = require('git-state')
+var git = require('git-state')
 
 var path = '/path/to/git/repo'
 
-if (gitState.isGit(path)) {
-  gitState.check(path, function (err, result) {
+if (git.isGit(path)) {
+  git.check(path, function (err, result) {
     if (err) throw err
     console.log(result) // => { branch: 'master',
                         //      ahead: 0,
