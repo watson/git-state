@@ -1,0 +1,7 @@
+ahead=`git rev-list HEAD --not --remotes | wc -l | awk '{print $1}'`
+echo $ahead
+if [[ '$ahead' == '0' ]]; then
+  exit
+else
+  exit 1
+fi
