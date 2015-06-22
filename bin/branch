@@ -1,7 +1,4 @@
 branch=`git rev-parse --abbrev-ref HEAD`
 echo $branch
-if [[ '$branch' == 'master' ]]; then
-  exit
-else
-  exit 1
-fi
+[ "$branch" == "master" ] && exit 1
+exit 0

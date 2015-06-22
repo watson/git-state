@@ -1,7 +1,4 @@
 untracked=`git status -s | grep '^??' | wc -l | print '{print $1}'
 echo $untracked
-if [[ '$untracked' == '0' ]]; then
-  exit
-else
-  exit 1
-fi
+[ "$untracked" == "0" ] && exit 1
+exit 0

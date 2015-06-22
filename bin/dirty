@@ -1,7 +1,4 @@
 dirty=`git status -s | grep -v '^??' | wc -l | awk '{print $1}'`
 echo $dirty
-if [[ '$dirty' == '0' ]]; then
-  exit
-else
-  exit 1
-fi
+[ "$dirty" == "0" ] && exit 1
+exit 0
