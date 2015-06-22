@@ -52,11 +52,9 @@ var status = function (repo, cb) {
 }
 
 var branch = function (repo, cb) {
-  exec('cat .git/HEAD', { cwd: repo }, function (err, stdout, stderr) {
+  exec('git rev-parse --abbrev-ref HEAD', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(err)
-    stdout = stdout.trim()
-    var branch = stdout.indexOf('ref:') === 0 ? stdout.substr(16) : stdout
-    cb(null, branch)
+    cb(null, stdout.trim())
   })
 }
 
