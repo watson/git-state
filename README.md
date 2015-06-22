@@ -65,12 +65,14 @@ The result object contains the following properties:
 
 Inside the [`bin`](https://github.com/watson/git-state/tree/master/bin)
 folder is a set of shell scripts which will perform the same checks as
-the `check()` function, but just in pure bash. This allows you for
-instance to modify your command prompt without having to invoke node
-(which can be kind of slow if done at every request). In fact this is
-exactly what the [git-ps1](https://github.com/watson/git-ps1) module
-does for you.
+the `isGit()` and `check()` functions, but just in pure bash. This
+allows you for instance to modify your command prompt without having to
+invoke node (which can be kind of slow if done at every request). In
+fact this is exactly what the
+[git-ps1](https://github.com/watson/git-ps1) module does for you.
 
+- `bin/isgit` - exit code will be 0 if cwd is inside a git repo,
+  otherwise 1
 - `bin/ahead` - exit code will be 0 if result is `0`, otherwise 1
 - `bin/branch` - exit code will be 0 if result is `master`, otherwise 1
 - `bin/dirty` - exit code will be 0 if result is `0`, otherwise 1
