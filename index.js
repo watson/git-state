@@ -54,14 +54,14 @@ var status = function (repo, cb) {
 }
 
 var branch = function (repo, cb) {
-  exec('git rev-parse --abbrev-ref HEAD', { cwd: repo }, function (err, stdout, stderr) {
-    if (err) return cb(err)
+  exec('git show-ref &> /dev/null && git rev-parse --abbrev-ref HEAD', { cwd: repo }, function (err, stdout, stderr) {
+    if (err) return cb() // most likely the git repo doesn't have any commits yet
     cb(null, stdout.trim())
   })
 }
 
 var ahead = function (repo, cb) {
-  exec('git rev-list HEAD --not --remotes', { cwd: repo }, function (err, stdout, stderr) {
+  exec('git show-ref &> /dev/null && git rev-list HEAD --not --remotes', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(null, NaN) // depending on the state of the git repo, the command might return non-0 exit code
     stdout = stdout.trim()
     cb(null, !stdout ? 0 : parseInt(stdout.split(os.EOL).length, 10))
