@@ -6,6 +6,8 @@ var path = require('path')
 var exec = require('child_process').exec
 var afterAll = require('after-all-results')
 
+var VALID_BRANCHES = ['master', 'gh-pages']
+
 exports.isGit = function (dir, cb) {
   fs.exists(path.join(dir, '.git'), cb)
 }
@@ -21,7 +23,7 @@ exports.check = function (repo, cb) {
     var branch = results[0]
     var ahead = results[1]
     var status = results[2]
-    var issues = Boolean(branch !== 'master' ||
+    var issues = Boolean(!~VALID_BRANCHES.indexOf(branch) ||
                          ahead || Number.isNaN(ahead) ||
                          status.dirty || status.untracked)
 
