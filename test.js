@@ -31,3 +31,39 @@ test('#check()', function (t) {
     t.end()
   })
 })
+
+test('#untracked()', function (t) {
+  var dir = process.cwd()
+  git.untracked(dir, function (err, result) {
+    t.error(err)
+    t.equal(typeof result, 'number')
+    t.end()
+  })
+})
+
+test('#dirty()', function (t) {
+  var dir = process.cwd()
+  git.dirty(dir, function (err, result) {
+    t.error(err)
+    t.equal(typeof result, 'number')
+    t.end()
+  })
+})
+
+test('#branch()', function (t) {
+  var dir = process.cwd()
+  git.branch(dir, function (err, result) {
+    t.error(err)
+    t.equal(typeof result, 'string')
+    t.end()
+  })
+})
+
+test('#ahead()', function (t) {
+  var dir = process.cwd()
+  git.ahead(dir, function (err, result) {
+    t.error(err)
+    t.equal(typeof result, 'number')
+    t.end()
+  })
+})

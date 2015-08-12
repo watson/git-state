@@ -61,6 +61,43 @@ The result object contains the following properties:
   non-clean state (e.g. it's dirty, contains untracked files, is head of
   its remote or is currently not on master)
 
+#### `untracked(path, callback)`
+
+Get the amount of untracked files in the git repository at the given
+`path`.
+
+The `callback` will be called with two arguments: An optional error
+object and a number representing the amount of untracked files.
+
+#### `dirty(path, callback)`
+
+Get the amount of dirty files in the git repository at the given
+`path`.
+
+The `callback` will be called with two arguments: An optional error
+object and a number representing the amount of dirty files.
+
+#### `branch(path, callback)`
+
+Get the currently checked out branch in the git repository at the given
+`path`.
+
+The `callback` will be called with two arguments: An optional error
+object and a string with the branch name.
+
+If the branch name cannot be found, a falsy value will be returned.
+
+#### `ahead(path, callback)`
+
+Get the amount of commits the current branch in the git repository at
+the given `path` is ahead of its remote.
+
+The `callback` will be called with two arguments: An optional error
+object and a number indicating the amount of commits the branch is ahead
+of its remote.
+
+If the number cannot be determined, `NaN` will be returned instead.
+
 ## Shell implementation
 
 Inside the [`bin`](https://github.com/watson/git-state/tree/master/bin)

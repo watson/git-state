@@ -36,9 +36,38 @@ exports.check = function (repo, cb) {
     })
   })
 
-  branch(repo, next())
-  ahead(repo, next())
+  exports.branch(repo, next())
+  exports.ahead(repo, next())
   status(repo, next())
+}
+
+exports.untracked = function (repo, cb) {
+  status(repo, function (err, result) {
+    if (err) return cb(err)
+    cb(null, result.untracked)
+  })
+}
+
+exports.dirty = function (repo, cb) {
+  status(repo, function (err, result) {
+    if (err) return cb(err)
+    cb(null, result.dirty)
+  })
+}
+
+exports.branch = function (repo, cb) {
+  exec('git show-ref &> /dev/null && git rev-parse --abbrev-ref HEAD', { cwd: repo }, function (err, stdout, stderr) {
+    if (err) return cb() // most likely the git repo doesn't have any commits yet
+    cb(null, stdout.trim())
+  })
+}
+
+exports.ahead = function (repo, cb) {
+  exec('git show-ref &> /dev/null && git rev-list HEAD --not --remotes', { cwd: repo }, function (err, stdout, stderr) {
+    if (err) return cb(null, NaN) // depending on the state of the git repo, the command might return non-0 exit code
+    stdout = stdout.trim()
+    cb(null, !stdout ? 0 : parseInt(stdout.split(os.EOL).length, 10))
+  })
 }
 
 var status = function (repo, cb) {
@@ -50,21 +79,6 @@ var status = function (repo, cb) {
       else status.dirty++
     })
     cb(null, status)
-  })
-}
-
-var branch = function (repo, cb) {
-  exec('git show-ref &> /dev/null && git rev-parse --abbrev-ref HEAD', { cwd: repo }, function (err, stdout, stderr) {
-    if (err) return cb() // most likely the git repo doesn't have any commits yet
-    cb(null, stdout.trim())
-  })
-}
-
-var ahead = function (repo, cb) {
-  exec('git show-ref &> /dev/null && git rev-list HEAD --not --remotes', { cwd: repo }, function (err, stdout, stderr) {
-    if (err) return cb(null, NaN) // depending on the state of the git repo, the command might return non-0 exit code
-    stdout = stdout.trim()
-    cb(null, !stdout ? 0 : parseInt(stdout.split(os.EOL).length, 10))
   })
 }
 
