@@ -85,3 +85,13 @@ var status = function (repo, cb) {
 var truthy = function (obj) {
   return !!obj
 }
+
+exports.commit = function (repo, cb) {
+  exec('git rev-parse --short HEAD', { cwd: repo }, function (err, stdout, stderr) {
+    if (err) return cb(err)
+
+    var commitHash = stdout.trim()
+
+    cb(null, commitHash)
+  })
+}
