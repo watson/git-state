@@ -58,8 +58,8 @@ The result object contains the following properties:
 - `dirty` - The number of dirty files
 - `untracked` - The number of untracked files
 - `issues` - A generic boolean which is `true` if the repository is in a
-  non-clean state (e.g. it's dirty, contains untracked files, is head of
-  its remote or is currently not on master)
+  non-clean state (e.g. it's dirty, contains untracked files, is ahead
+  of its remote or is currently not on master)
 
 #### `untracked(path, callback)`
 
