@@ -98,6 +98,14 @@ of its remote.
 
 If the number cannot be determined, `NaN` will be returned instead.
 
+#### `commit(path, callback)`
+
+Get the short-hash (e.g. `7b0a3ab`) for the latest commit at `HEAD` in
+the git repository at the given `path`.
+
+The `callback` will be called with two arguments: An optional error
+object and a string containing the short-hash.
+
 ## Shell implementation
 
 Inside the [`bin`](https://github.com/watson/git-state/tree/master/bin)
@@ -114,6 +122,7 @@ fact this is exactly what the
 - `bin/branch` - exit code will be 0 if result is `master`, otherwise 1
 - `bin/dirty` - exit code will be 0 if result is `0`, otherwise 1
 - `bin/untracked` - exit code will be 0 if result is `0`, otherwise 1
+- `bin/commit` - exit code will be 0 if a commit can be found, otherwise 1
 - `bin/issues` - will combine all of the above into one script which
   will exit with exit code 0 if all pass or 1 if one of them fail
 
