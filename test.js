@@ -67,3 +67,12 @@ test('#ahead()', function (t) {
     t.end()
   })
 })
+
+test('#commit()', function (t) {
+  var dir = process.cwd()
+  git.commit(dir, function (err, result) {
+    t.error(err)
+    t.equal(typeof result, 'string')
+    t.end()
+  })
+})
