@@ -9,4 +9,4 @@ done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 # Run all scripts, but suppress output (no win32 support yet)
-$DIR/have-head &> /dev/null && $DIR/ahead &> /dev/null && $DIR/branch &> /dev/null && $DIR/dirty &> /dev/null && $DIR/untracked &> /dev/null
+$DIR/have-head &> /dev/null && $DIR/ahead &> /dev/null && $DIR/branch &> /dev/null && $DIR/dirty &> /dev/null && $DIR/untracked &> /dev/null && $DIR/stashes &> /dev/null

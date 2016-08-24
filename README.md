@@ -27,6 +27,7 @@ git.isGit(path, function (exists) {
                         //      ahead: 0,
                         //      dirty: 9,
                         //      untracked: 1,
+                        //      stashes: 0,
                         //      issues: true }
   })
 })
@@ -57,6 +58,7 @@ The result object contains the following properties:
   remote (may be `NaN` if there for instance is no remote)
 - `dirty` - The number of dirty files
 - `untracked` - The number of untracked files
+- `stashes` - The number of stored stashes
 - `issues` - A generic boolean which is `true` if the repository is in a
   non-clean state (e.g. it's dirty, contains untracked files, is ahead
   of its remote or is currently not on master)
@@ -106,6 +108,14 @@ the git repository at the given `path`.
 The `callback` will be called with two arguments: An optional error
 object and a string containing the short-hash.
 
+#### `stashes(path, callback)`
+
+Get the amount of stashed changes in the git repository at the given
+`path`.
+
+The `callback` will be called with two arguments: An optional error
+object and a number representing the amount of stashed changes.
+
 ## Shell implementation
 
 Inside the [`bin`](https://github.com/watson/git-state/tree/master/bin)
@@ -122,6 +132,7 @@ fact this is exactly what the
 - `bin/branch` - exit code will be 0 if result is `master`, otherwise 1
 - `bin/dirty` - exit code will be 0 if result is `0`, otherwise 1
 - `bin/untracked` - exit code will be 0 if result is `0`, otherwise 1
+- `bin/stashes` - exit code will be 0 if result is `0`, otherwise 1
 - `bin/commit` - exit code will be 0 if a commit can be found, otherwise 1
 - `bin/issues` - will combine all of the above into one script which
   will exit with exit code 0 if all pass or 1 if one of them fail

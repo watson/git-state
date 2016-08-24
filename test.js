@@ -22,11 +22,12 @@ test('#check()', function (t) {
   var dir = process.cwd()
   git.check(dir, function (err, result) {
     t.error(err)
-    t.deepEqual(Object.keys(result), ['branch', 'ahead', 'dirty', 'untracked', 'issues'])
+    t.deepEqual(Object.keys(result), ['branch', 'ahead', 'dirty', 'untracked', 'stashes', 'issues'])
     t.equal(typeof result.branch, 'string')
     t.equal(typeof result.ahead, 'number')
     t.equal(typeof result.dirty, 'number')
     t.equal(typeof result.untracked, 'number')
+    t.equal(typeof result.stashes, 'number')
     t.equal(typeof result.issues, 'boolean')
     t.end()
   })
@@ -73,6 +74,15 @@ test('#commit()', function (t) {
   git.commit(dir, function (err, result) {
     t.error(err)
     t.equal(typeof result, 'string')
+    t.end()
+  })
+})
+
+test('#stashes()', function (t) {
+  var dir = process.cwd()
+  git.stashes(dir, function (err, result) {
+    t.error(err)
+    t.equal(typeof result, 'number')
     t.end()
   })
 })

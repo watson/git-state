@@ -22,22 +22,25 @@ exports.check = function (repo, cb) {
 
     var branch = results[0]
     var ahead = results[1]
-    var status = results[2]
+    var stashes = results[2]
+    var status = results[3]
     var issues = Boolean(!~VALID_BRANCHES.indexOf(branch) ||
                          ahead || Number.isNaN(ahead) ||
-                         status.dirty || status.untracked)
+                         status.dirty || status.untracked || stashes)
 
     cb(null, {
       branch: branch,
       ahead: ahead,
       dirty: status.dirty,
       untracked: status.untracked,
+      stashes: stashes,
       issues: issues
     })
   })
 
   exports.branch(repo, next())
   exports.ahead(repo, next())
+  exports.stashes(repo, next())
   status(repo, next())
 }
 
@@ -89,9 +92,15 @@ var truthy = function (obj) {
 exports.commit = function (repo, cb) {
   exec('git rev-parse --short HEAD', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(err)
-
     var commitHash = stdout.trim()
-
     cb(null, commitHash)
+  })
+}
+
+exports.stashes = function (repo, cb) {
+  exec('git stash list', { cwd: repo }, function (err, stdout, stderr) {
+    if (err) return cb(err)
+    var stashes = stdout.trim().split(os.EOL).filter(truthy)
+    cb(null, stashes.length)
   })
 }
