@@ -27,8 +27,7 @@ git.isGit(path, function (exists) {
                         //      ahead: 0,
                         //      dirty: 9,
                         //      untracked: 1,
-                        //      stashes: 0,
-                        //      issues: true }
+                        //      stashes: 0 }
   })
 })
 ```
@@ -59,9 +58,6 @@ The result object contains the following properties:
 - `dirty` - The number of dirty files
 - `untracked` - The number of untracked files
 - `stashes` - The number of stored stashes
-- `issues` - A generic boolean which is `true` if the repository is in a
-  non-clean state (e.g. it's dirty, contains untracked files, is ahead
-  of its remote or is currently not on master)
 
 #### `untracked(path, callback)`
 
@@ -134,8 +130,6 @@ fact this is exactly what the
 - `bin/untracked` - exit code will be 0 if result is `0`, otherwise 1
 - `bin/stashes` - exit code will be 0 if result is `0`, otherwise 1
 - `bin/commit` - exit code will be 0 if a commit can be found, otherwise 1
-- `bin/issues` - will combine all of the above into one script which
-  will exit with exit code 0 if all pass or 1 if one of them fail
 
 ## License
 

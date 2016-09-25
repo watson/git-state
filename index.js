@@ -6,8 +6,6 @@ var path = require('path')
 var exec = require('child_process').exec
 var afterAll = require('after-all-results')
 
-var VALID_BRANCHES = ['master', 'gh-pages']
-
 // Prevent from failing on windows
 var nullPath = /^win/.test(process.platform) ? 'nul' : '/dev/null'
 
@@ -27,17 +25,13 @@ exports.check = function (repo, cb) {
     var ahead = results[1]
     var stashes = results[2]
     var status = results[3]
-    var issues = Boolean(!~VALID_BRANCHES.indexOf(branch) ||
-                         ahead || Number.isNaN(ahead) ||
-                         status.dirty || status.untracked || stashes)
 
     cb(null, {
       branch: branch,
       ahead: ahead,
       dirty: status.dirty,
       untracked: status.untracked,
-      stashes: stashes,
-      issues: issues
+      stashes: stashes
     })
   })
 
