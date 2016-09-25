@@ -8,6 +8,9 @@ var afterAll = require('after-all-results')
 
 var VALID_BRANCHES = ['master', 'gh-pages']
 
+// Prevent from failing on windows
+var nullPath = /^win/.test(process.platform) ? 'nul' : '/dev/null'
+
 exports.isGit = function (dir, cb) {
   fs.exists(path.join(dir, '.git'), cb)
 }
@@ -56,14 +59,14 @@ exports.dirty = function (repo, cb) {
 }
 
 exports.branch = function (repo, cb) {
-  exec('git show-ref >/dev/null 2>&1 && git rev-parse --abbrev-ref HEAD', { cwd: repo }, function (err, stdout, stderr) {
+  exec('git show-ref >' + nullPath + ' 2>&1 && git rev-parse --abbrev-ref HEAD', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb() // most likely the git repo doesn't have any commits yet
     cb(null, stdout.trim())
   })
 }
 
 exports.ahead = function (repo, cb) {
-  exec('git show-ref >/dev/null 2>&1 && git rev-list HEAD --not --remotes', { cwd: repo }, function (err, stdout, stderr) {
+  exec('git show-ref >' + nullPath + ' 2>&1 && git rev-list HEAD --not --remotes', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(null, NaN) // depending on the state of the git repo, the command might return non-0 exit code
     stdout = stdout.trim()
     cb(null, !stdout ? 0 : parseInt(stdout.split(os.EOL).length, 10))
