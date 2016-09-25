@@ -1,6 +1,6 @@
 {
   "name": "git-state",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Get the current state of any git repository",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/watson/git-state",
   "coordinates": [
-    55.68842129999999,
-    12.5618919
+    41.3264171,
+    -72.9187589
   ]
 }
