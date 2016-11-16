@@ -42,8 +42,7 @@ test('#checkSync()', function (t) {
     t.equal(typeof result.dirty, 'number')
     t.equal(typeof result.untracked, 'number')
     t.equal(typeof result.stashes, 'number')
-  }
-  catch(err) {
+  } catch (err) {
     t.error(err)
   }
   t.end()
@@ -63,8 +62,7 @@ test('#untrackedSync()', function (t) {
   try {
     var result = git.untrackedSync(dir)
     t.equal(typeof result, 'number')
-  }
-  catch(err) {
+  } catch (err) {
     t.error(err)
   }
   t.end()
@@ -84,8 +82,7 @@ test('#dirtySync()', function (t) {
   try {
     var result = git.dirtySync(dir)
     t.equal(typeof result, 'number')
-  }
-  catch(err) {
+  } catch (err) {
     t.error(err)
   }
   t.end()
@@ -105,8 +102,7 @@ test('#branchSync()', function (t) {
   try {
     var result = git.branchSync(dir)
     t.equal(typeof result, 'string')
-  }
-  catch(err) {
+  } catch (err) {
     t.error(err)
   }
   t.end()
@@ -126,8 +122,7 @@ test('#aheadSync()', function (t) {
   try {
     var result = git.aheadSync(dir)
     t.equal(typeof result, 'number')
-  }
-  catch(err) {
+  } catch (err) {
     t.error(err)
   }
   t.end()
@@ -147,8 +142,7 @@ test('#commitSync()', function (t) {
   try {
     var result = git.commitSync(dir)
     t.equal(typeof result, 'string')
-  }
-  catch(err) {
+  } catch (err) {
     t.error(err)
   }
   t.end()
@@ -168,8 +162,7 @@ test('#stashesSync()', function (t) {
   try {
     var result = git.stashesSync(dir)
     t.equal(typeof result, 'number')
-  }
-  catch(err) {
+  } catch (err) {
     t.error(err)
   }
   t.end()
