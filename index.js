@@ -4,6 +4,7 @@ var os = require('os')
 var fs = require('fs')
 var path = require('path')
 var exec = require('child_process').exec
+var execSync = require('child_process').execSync
 var afterAll = require('after-all-results')
 
 // Prevent from failing on windows
@@ -15,6 +16,21 @@ exports.isGit = function (dir, cb) {
 
 exports.isGitSync = function (dir) {
   return fs.existsSync(path.join(dir, '.git'))
+}
+
+exports.checkSync = function (repo) {
+  var branch = exports.branchSync(repo)
+  var ahead = exports.aheadSync(repo)
+  var status = statusSync(repo)
+  var stashes = exports.stashesSync(repo)
+
+  return {
+    branch: branch,
+    ahead: ahead,
+    dirty: status.dirty,
+    untracked: status.untracked,
+    stashes: stashes
+  }
 }
 
 exports.check = function (repo, cb) {
@@ -100,4 +116,57 @@ exports.stashes = function (repo, cb) {
     var stashes = stdout.trim().split(os.EOL).filter(truthy)
     cb(null, stashes.length)
   })
+}
+
+//* SYNC methods *//
+exports.untrackedSync = function (repo) {
+  return statusSync(repo).untracked
+}
+
+exports.dirtySync = function (repo) {
+  return statusSync(repo).dirty
+}
+
+exports.branchSync = function (repo) {
+  try {
+    var stdout = execSync('git show-ref >' + nullPath + ' 2>&1 && git rev-parse --abbrev-ref HEAD', { cwd: repo }).toString();
+    return stdout.trim()
+  } catch (err) {
+    return null // most likely the git repo doesn't have any commits yet
+  }
+}
+
+exports.aheadSync = function (repo) {
+  try {
+    var stdout = execSync('git show-ref >' + nullPath + ' 2>&1 && git rev-list HEAD --not --remotes', { cwd: repo }).toString();
+    stdout = stdout.trim()
+    return !stdout ? 0 : parseInt(stdout.split(os.EOL).length, 10)
+  } catch (err) {
+    return NaN
+  }
+}
+
+// Throws error
+var statusSync = function (repo) {
+   var stdout = execSync('git status -s', { cwd: repo }).toString();
+   var status = { dirty: 0, untracked: 0 }
+   stdout.trim().split(os.EOL).filter(truthy).forEach(function (file) {
+      if (file.substr(0, 2) === '??') status.untracked++
+      else status.dirty++
+    })
+   return status
+}
+
+// Throws error
+exports.commitSync = function (repo) {
+  var stdout = execSync('git rev-parse --short HEAD', { cwd: repo }).toString();
+  var commitHash = stdout.trim()
+  return commitHash
+}
+
+// Throws error
+exports.stashesSync = function (repo) {
+  var stdout = execSync('git stash list', { cwd: repo }).toString()
+  var stashes = stdout.trim().split(os.EOL).filter(truthy)
+  return stashes.length
 }
