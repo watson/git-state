@@ -1,7 +1,10 @@
 'use strict'
 
 var test = require('tape')
+var semver = require('semver')
 var git = require('./')
+
+var ZEROTEN = semver.lt(process.version, '0.12.0')
 
 test('#isGit()', function (t) {
   var dir = process.cwd()
@@ -33,6 +36,7 @@ test('#check()', function (t) {
 })
 
 test('#checkSync()', function (t) {
+  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.checkSync(dir)
@@ -58,6 +62,7 @@ test('#untracked()', function (t) {
 })
 
 test('#untrackedSync()', function (t) {
+  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.untrackedSync(dir)
@@ -78,6 +83,7 @@ test('#dirty()', function (t) {
 })
 
 test('#dirtySync()', function (t) {
+  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.dirtySync(dir)
@@ -98,6 +104,7 @@ test('#branch()', function (t) {
 })
 
 test('#branchSync()', function (t) {
+  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.branchSync(dir)
@@ -118,6 +125,7 @@ test('#ahead()', function (t) {
 })
 
 test('#aheadSync()', function (t) {
+  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.aheadSync(dir)
@@ -138,6 +146,7 @@ test('#commit()', function (t) {
 })
 
 test('#commitSync()', function (t) {
+  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.commitSync(dir)
@@ -158,6 +167,7 @@ test('#stashes()', function (t) {
 })
 
 test('#stashesSync()', function (t) {
+  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.stashesSync(dir)
