@@ -59,6 +59,14 @@ The result object contains the following properties:
 - `untracked` - The number of untracked files
 - `stashes` - The number of stored stashes
 
+#### `checkSync(path)`
+
+Synchronous version of `check()`. 
+
+Can throw error. This typically happens if you are running a too old 
+version of Node.js (< 0.12), if git isnt found or if the path isn't 
+a git repository.
+
 #### `untracked(path, callback)`
 
 Get the amount of untracked files in the git repository at the given
@@ -67,6 +75,14 @@ Get the amount of untracked files in the git repository at the given
 The `callback` will be called with two arguments: An optional error
 object and a number representing the amount of untracked files.
 
+#### `untrackedSync(path)`
+
+Synchronous version of `untracked()`. 
+
+Can throw error. This typically happens if you are running a too old 
+version of Node.js (< 0.12), if git isnt found or if the path isn't 
+a git repository.
+
 #### `dirty(path, callback)`
 
 Get the amount of dirty files in the git repository at the given
@@ -74,6 +90,14 @@ Get the amount of dirty files in the git repository at the given
 
 The `callback` will be called with two arguments: An optional error
 object and a number representing the amount of dirty files.
+
+#### `dirtySync(path)`
+
+Synchronous version of `dirty() `. 
+
+Can throw error. This typically happens if you are running a too old 
+version of Node.js (< 0.12), if git isnt found or if the path isn't 
+a git repository.
 
 #### `branch(path, callback)`
 
@@ -84,6 +108,10 @@ The `callback` will be called with two arguments: An optional error
 object and a string with the branch name.
 
 If the branch name cannot be found, a falsy value will be returned.
+
+#### `branchSync(path)`
+
+Synchronous version of `branch()`. Returns null if no branch is set.
 
 #### `ahead(path, callback)`
 
@@ -96,6 +124,12 @@ of its remote.
 
 If the number cannot be determined, `NaN` will be returned instead.
 
+#### `aheadSync(path)`
+
+Synchronous version of `ahead()`.
+
+If the number cannot be determined, `NaN` will be returned instead.
+
 #### `commit(path, callback)`
 
 Get the short-hash (e.g. `7b0a3ab`) for the latest commit at `HEAD` in
@@ -104,6 +138,14 @@ the git repository at the given `path`.
 The `callback` will be called with two arguments: An optional error
 object and a string containing the short-hash.
 
+#### `commitSync(path)`
+
+Synchronous version of `commit()`. 
+
+Can throw error. This typically happens if you are running a too old 
+version of Node.js (< 0.12), if git isnt found or if the path isn't 
+a git repository.
+
 #### `stashes(path, callback)`
 
 Get the amount of stashed changes in the git repository at the given
@@ -111,6 +153,14 @@ Get the amount of stashed changes in the git repository at the given
 
 The `callback` will be called with two arguments: An optional error
 object and a number representing the amount of stashed changes.
+
+#### `stashesSync(path)`
+
+Synchronous version of `stashes()`. 
+
+Can throw error. This typically happens if you are running a too old 
+version of Node.js (< 0.12), if git isnt found or if the path isn't 
+a git repository.
 
 ## Shell implementation
 

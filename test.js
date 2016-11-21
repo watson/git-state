@@ -1,7 +1,10 @@
 'use strict'
 
 var test = require('tape')
+var semver = require('semver')
 var git = require('./')
+
+var ZEROTEN = semver.lt(process.version, '0.12.0')
 
 test('#isGit()', function (t) {
   var dir = process.cwd()
@@ -32,6 +35,23 @@ test('#check()', function (t) {
   })
 })
 
+test('#checkSync()', function (t) {
+  if (ZEROTEN) return t.end()
+  var dir = process.cwd()
+  try {
+    var result = git.checkSync(dir)
+    t.deepEqual(Object.keys(result), ['branch', 'ahead', 'dirty', 'untracked', 'stashes'])
+    t.equal(typeof result.branch, 'string')
+    t.equal(typeof result.ahead, 'number')
+    t.equal(typeof result.dirty, 'number')
+    t.equal(typeof result.untracked, 'number')
+    t.equal(typeof result.stashes, 'number')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
+})
+
 test('#untracked()', function (t) {
   var dir = process.cwd()
   git.untracked(dir, function (err, result) {
@@ -39,6 +59,18 @@ test('#untracked()', function (t) {
     t.equal(typeof result, 'number')
     t.end()
   })
+})
+
+test('#untrackedSync()', function (t) {
+  if (ZEROTEN) return t.end()
+  var dir = process.cwd()
+  try {
+    var result = git.untrackedSync(dir)
+    t.equal(typeof result, 'number')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
 })
 
 test('#dirty()', function (t) {
@@ -50,6 +82,18 @@ test('#dirty()', function (t) {
   })
 })
 
+test('#dirtySync()', function (t) {
+  if (ZEROTEN) return t.end()
+  var dir = process.cwd()
+  try {
+    var result = git.dirtySync(dir)
+    t.equal(typeof result, 'number')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
+})
+
 test('#branch()', function (t) {
   var dir = process.cwd()
   git.branch(dir, function (err, result) {
@@ -57,6 +101,18 @@ test('#branch()', function (t) {
     t.equal(typeof result, 'string')
     t.end()
   })
+})
+
+test('#branchSync()', function (t) {
+  if (ZEROTEN) return t.end()
+  var dir = process.cwd()
+  try {
+    var result = git.branchSync(dir)
+    t.equal(typeof result, 'string')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
 })
 
 test('#ahead()', function (t) {
@@ -68,6 +124,18 @@ test('#ahead()', function (t) {
   })
 })
 
+test('#aheadSync()', function (t) {
+  if (ZEROTEN) return t.end()
+  var dir = process.cwd()
+  try {
+    var result = git.aheadSync(dir)
+    t.equal(typeof result, 'number')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
+})
+
 test('#commit()', function (t) {
   var dir = process.cwd()
   git.commit(dir, function (err, result) {
@@ -77,6 +145,18 @@ test('#commit()', function (t) {
   })
 })
 
+test('#commitSync()', function (t) {
+  if (ZEROTEN) return t.end()
+  var dir = process.cwd()
+  try {
+    var result = git.commitSync(dir)
+    t.equal(typeof result, 'string')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
+})
+
 test('#stashes()', function (t) {
   var dir = process.cwd()
   git.stashes(dir, function (err, result) {
@@ -84,4 +164,16 @@ test('#stashes()', function (t) {
     t.equal(typeof result, 'number')
     t.end()
   })
+})
+
+test('#stashesSync()', function (t) {
+  if (ZEROTEN) return t.end()
+  var dir = process.cwd()
+  try {
+    var result = git.stashesSync(dir)
+    t.equal(typeof result, 'number')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
 })
