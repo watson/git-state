@@ -10,7 +10,7 @@ var afterAll = require('after-all-results')
 var nullPath = /^win/.test(process.platform) ? 'nul' : '/dev/null'
 
 // Consider EOL as \n because either Windows or *nix, this escape char will be there
-var EOL = '\n'
+var EOL = /\r?\n/
 
 exports.isGit = function (dir, cb) {
   fs.exists(path.join(dir, '.git'), cb)
