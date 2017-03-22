@@ -1,6 +1,5 @@
 'use strict'
 
-var os = require('os')
 var fs = require('fs')
 var path = require('path')
 var exec = require('child_process').exec
@@ -9,6 +8,9 @@ var afterAll = require('after-all-results')
 
 // Prevent from failing on windows
 var nullPath = /^win/.test(process.platform) ? 'nul' : '/dev/null'
+
+// Consider EOL as \n because either Windows or *nix, this escape char will be there
+var EOL = /\r?\n/
 
 exports.isGit = function (dir, cb) {
   fs.exists(path.join(dir, '.git'), cb)
@@ -82,7 +84,7 @@ exports.ahead = function (repo, cb) {
   exec('git show-ref >' + nullPath + ' 2>&1 && git rev-list HEAD --not --remotes', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(null, NaN) // depending on the state of the git repo, the command might return non-0 exit code
     stdout = stdout.trim()
-    cb(null, !stdout ? 0 : parseInt(stdout.split(os.EOL).length, 10))
+    cb(null, !stdout ? 0 : parseInt(stdout.split(EOL).length, 10))
   })
 }
 
@@ -90,7 +92,7 @@ var status = function (repo, cb) {
   exec('git status -s', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(err)
     var status = { dirty: 0, untracked: 0 }
-    stdout.trim().split(os.EOL).filter(truthy).forEach(function (file) {
+    stdout.trim().split(EOL).filter(truthy).forEach(function (file) {
       if (file.substr(0, 2) === '??') status.untracked++
       else status.dirty++
     })
@@ -113,7 +115,7 @@ exports.commit = function (repo, cb) {
 exports.stashes = function (repo, cb) {
   exec('git stash list', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(err)
-    var stashes = stdout.trim().split(os.EOL).filter(truthy)
+    var stashes = stdout.trim().split(EOL).filter(truthy)
     cb(null, stashes.length)
   })
 }
@@ -140,7 +142,7 @@ exports.aheadSync = function (repo) {
   try {
     var stdout = execSync('git show-ref >' + nullPath + ' 2>&1 && git rev-list HEAD --not --remotes', { cwd: repo }).toString()
     stdout = stdout.trim()
-    return !stdout ? 0 : parseInt(stdout.split(os.EOL).length, 10)
+    return !stdout ? 0 : parseInt(stdout.split(EOL).length, 10)
   } catch (err) {
     return NaN
   }
@@ -150,7 +152,7 @@ exports.aheadSync = function (repo) {
 var statusSync = function (repo) {
   var stdout = execSync('git status -s', { cwd: repo }).toString()
   var status = { dirty: 0, untracked: 0 }
-  stdout.trim().split(os.EOL).filter(truthy).forEach(function (file) {
+  stdout.trim().split(EOL).filter(truthy).forEach(function (file) {
     if (file.substr(0, 2) === '??') status.untracked++
     else status.dirty++
   })
@@ -167,6 +169,6 @@ exports.commitSync = function (repo) {
 // Throws error
 exports.stashesSync = function (repo) {
   var stdout = execSync('git stash list', { cwd: repo }).toString()
-  var stashes = stdout.trim().split(os.EOL).filter(truthy)
+  var stashes = stdout.trim().split(EOL).filter(truthy)
   return stashes.length
 }
