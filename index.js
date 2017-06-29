@@ -12,15 +12,15 @@ var nullPath = /^win/.test(process.platform) ? 'nul' : '/dev/null'
 // Consider EOL as \n because either Windows or *nix, this escape char will be there
 var EOL = /\r?\n/
 
-exports.isGit = function (dir, cb) {
+exports.isGit = function isGit (dir, cb) {
   fs.exists(path.join(dir, '.git'), cb)
 }
 
-exports.isGitSync = function (dir) {
+exports.isGitSync = function isGitSync (dir) {
   return fs.existsSync(path.join(dir, '.git'))
 }
 
-exports.checkSync = function (repo) {
+exports.checkSync = function checkSync (repo) {
   var branch = exports.branchSync(repo)
   var ahead = exports.aheadSync(repo)
   var status = statusSync(repo)
@@ -35,7 +35,7 @@ exports.checkSync = function (repo) {
   }
 }
 
-exports.check = function (repo, cb) {
+exports.check = function check (repo, cb) {
   var next = afterAll(function (err, results) {
     if (err) return cb(err)
 
@@ -59,28 +59,28 @@ exports.check = function (repo, cb) {
   status(repo, next())
 }
 
-exports.untracked = function (repo, cb) {
+exports.untracked = function untracked (repo, cb) {
   status(repo, function (err, result) {
     if (err) return cb(err)
     cb(null, result.untracked)
   })
 }
 
-exports.dirty = function (repo, cb) {
+exports.dirty = function dirty (repo, cb) {
   status(repo, function (err, result) {
     if (err) return cb(err)
     cb(null, result.dirty)
   })
 }
 
-exports.branch = function (repo, cb) {
+exports.branch = function branch (repo, cb) {
   exec('git show-ref >' + nullPath + ' 2>&1 && git rev-parse --abbrev-ref HEAD', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb() // most likely the git repo doesn't have any commits yet
     cb(null, stdout.trim())
   })
 }
 
-exports.ahead = function (repo, cb) {
+exports.ahead = function ahead (repo, cb) {
   exec('git show-ref >' + nullPath + ' 2>&1 && git rev-list HEAD --not --remotes', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(null, NaN) // depending on the state of the git repo, the command might return non-0 exit code
     stdout = stdout.trim()
@@ -88,7 +88,7 @@ exports.ahead = function (repo, cb) {
   })
 }
 
-var status = function (repo, cb) {
+function status (repo, cb) {
   exec('git status -s', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(err)
     var status = { dirty: 0, untracked: 0 }
@@ -100,11 +100,11 @@ var status = function (repo, cb) {
   })
 }
 
-var truthy = function (obj) {
+function truthy (obj) {
   return !!obj
 }
 
-exports.commit = function (repo, cb) {
+exports.commit = function commit (repo, cb) {
   exec('git rev-parse --short HEAD', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(err)
     var commitHash = stdout.trim()
@@ -112,7 +112,7 @@ exports.commit = function (repo, cb) {
   })
 }
 
-exports.stashes = function (repo, cb) {
+exports.stashes = function stashes (repo, cb) {
   exec('git stash list', { cwd: repo }, function (err, stdout, stderr) {
     if (err) return cb(err)
     var stashes = stdout.trim().split(EOL).filter(truthy)
@@ -121,15 +121,15 @@ exports.stashes = function (repo, cb) {
 }
 
 //* SYNC methods *//
-exports.untrackedSync = function (repo) {
+exports.untrackedSync = function untrackedSync (repo) {
   return statusSync(repo).untracked
 }
 
-exports.dirtySync = function (repo) {
+exports.dirtySync = function dirtySync (repo) {
   return statusSync(repo).dirty
 }
 
-exports.branchSync = function (repo) {
+exports.branchSync = function branchSync (repo) {
   try {
     var stdout = execSync('git show-ref >' + nullPath + ' 2>&1 && git rev-parse --abbrev-ref HEAD', { cwd: repo }).toString()
     return stdout.trim()
@@ -138,7 +138,7 @@ exports.branchSync = function (repo) {
   }
 }
 
-exports.aheadSync = function (repo) {
+exports.aheadSync = function aheadSync (repo) {
   try {
     var stdout = execSync('git show-ref >' + nullPath + ' 2>&1 && git rev-list HEAD --not --remotes', { cwd: repo }).toString()
     stdout = stdout.trim()
@@ -149,7 +149,7 @@ exports.aheadSync = function (repo) {
 }
 
 // Throws error
-var statusSync = function (repo) {
+var statusSync = function statusSync (repo) {
   var stdout = execSync('git status -s', { cwd: repo }).toString()
   var status = { dirty: 0, untracked: 0 }
   stdout.trim().split(EOL).filter(truthy).forEach(function (file) {
@@ -160,14 +160,14 @@ var statusSync = function (repo) {
 }
 
 // Throws error
-exports.commitSync = function (repo) {
+exports.commitSync = function commitSync (repo) {
   var stdout = execSync('git rev-parse --short HEAD', { cwd: repo }).toString()
   var commitHash = stdout.trim()
   return commitHash
 }
 
 // Throws error
-exports.stashesSync = function (repo) {
+exports.stashesSync = function stashesSync (repo) {
   var stdout = execSync('git stash list', { cwd: repo }).toString()
   var stashes = stdout.trim().split(EOL).filter(truthy)
   return stashes.length
