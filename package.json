@@ -4,7 +4,9 @@
   "description": "Get the current state of any git repository",
   "main": "index.js",
   "scripts": {
-    "test": "standard && tape test.js"
+    "pretest": "touch dummy.file",
+    "test": "standard && tape test.js",
+    "posttest": "rm dummy.file"
   },
   "repository": {
     "type": "git",
