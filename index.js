@@ -13,7 +13,9 @@ var nullPath = /^win/.test(process.platform) ? 'nul' : '/dev/null'
 var EOL = /\r?\n/
 
 exports.isGit = function isGit (dir, cb) {
-  fs.exists(path.join(dir, '.git'), cb)
+  fs.stat(path.join(dir, '.git'), function (err) {
+    cb(!err) // eslint-disable-line standard/no-callback-literal
+  })
 }
 
 exports.isGitSync = function isGitSync (dir) {
