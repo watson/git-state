@@ -2,10 +2,7 @@
 
 var path = require('path')
 var test = require('tape')
-var semver = require('semver')
 var git = require('./')
-
-var ZEROTEN = semver.lt(process.version, '0.12.0')
 
 test('#isGit()', function (t) {
   var dir = process.cwd()
@@ -50,7 +47,6 @@ test('#check() with maxBuffer', function (t) {
 })
 
 test('#checkSync()', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.checkSync(dir)
@@ -67,7 +63,6 @@ test('#checkSync()', function (t) {
 })
 
 test('#checkSync() with maxBuffer', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   t.throws(function () {
     git.checkSync(dir, {maxBuffer: 1})
@@ -90,7 +85,6 @@ test('#untracked() with maxBuffer', function (t) {
 })
 
 test('#untrackedSync()', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.untrackedSync(dir)
@@ -102,7 +96,6 @@ test('#untrackedSync()', function (t) {
 })
 
 test('#untrackedSync() with maxBuffer', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   t.throws(function () {
     git.untrackedSync(dir, {maxBuffer: 1})
@@ -125,7 +118,6 @@ test('#dirty() with maxBuffer', function (t) {
 })
 
 test('#dirtySync()', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.dirtySync(dir)
@@ -137,7 +129,6 @@ test('#dirtySync()', function (t) {
 })
 
 test('#dirtySync() with maxBuffer', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   t.throws(function () {
     git.dirtySync(dir, {maxBuffer: 1})
@@ -160,7 +151,6 @@ test('#branch() with maxBuffer', function (t) {
 })
 
 test('#branchSync()', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.branchSync(dir)
@@ -172,7 +162,6 @@ test('#branchSync()', function (t) {
 })
 
 test('#branchSync() with maxBuffer', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   t.throws(function () {
     git.branchSync(dir, {maxBuffer: 1})
@@ -196,7 +185,6 @@ test('#ahead()', function (t) {
 // })
 
 test('#aheadSync()', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.aheadSync(dir)
@@ -209,7 +197,6 @@ test('#aheadSync()', function (t) {
 
 // TODO: Find way to test this as currently none of the buffer is used
 // test('#aheadSync() with maxBuffer', function (t) {
-//   if (ZEROTEN) return t.end()
 //   var dir = process.cwd()
 //   t.throws(function () {
 //     git.aheadSync(dir, {maxBuffer: 1})
@@ -232,7 +219,6 @@ test('#commit() with maxBuffer', function (t) {
 })
 
 test('#commitSync()', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.commitSync(dir)
@@ -244,7 +230,6 @@ test('#commitSync()', function (t) {
 })
 
 test('#commitSync() with maxBuffer', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   t.throws(function () {
     git.commitSync(dir, {maxBuffer: 1})
@@ -268,7 +253,6 @@ test('#stashes()', function (t) {
 // })
 
 test('#stashesSync()', function (t) {
-  if (ZEROTEN) return t.end()
   var dir = process.cwd()
   try {
     var result = git.stashesSync(dir)
@@ -281,7 +265,6 @@ test('#stashesSync()', function (t) {
 
 // TODO: Find way to test this as currently none of the buffer is used
 // test('#stashesSync() with maxBuffer', function (t) {
-//   if (ZEROTEN) return t.end()
 //   var dir = process.cwd()
 //   t.throws(function () {
 //     git.stashesSync(dir, {maxBuffer: 1})
