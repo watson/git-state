@@ -1,5 +1,6 @@
 'use strict'
 
+var path = require('path')
 var test = require('tape')
 var semver = require('semver')
 var git = require('./')
@@ -10,6 +11,14 @@ test('#isGit()', function (t) {
   var dir = process.cwd()
   git.isGit(dir, function (exists) {
     t.equal(exists, true)
+    t.end()
+  })
+})
+
+test('#isGit() negative', function (t) {
+  var dir = path.join(process.cwd(), '..')
+  git.isGit(dir, function (exists) {
+    t.equal(exists, false)
     t.end()
   })
 })
