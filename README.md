@@ -44,7 +44,7 @@ depending on if the given path contains a git repository.
 Synchronous version of `isGit()` which returns either `true` or `false`
 depending on if the given path contains a git repository.
 
-#### `check(path, callback)`
+#### `check(path[, options], callback)`
 
 Will check the state of the git repository at the given `path` and call
 the `callback`. The `callback` will be called with two arguments: An
@@ -59,7 +59,12 @@ The result object contains the following properties:
 - `untracked` - The number of untracked files
 - `stashes` - The number of stored stashes
 
-#### `checkSync(path)`
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `checkSync(path[, options])`
 
 Synchronous version of `check()`. 
 
@@ -67,7 +72,7 @@ Can throw error. This typically happens if you are running a too old
 version of Node.js (< 0.12), if git isnt found or if the path isn't 
 a git repository.
 
-#### `untracked(path, callback)`
+#### `untracked(path[, options], callback)`
 
 Get the amount of untracked files in the git repository at the given
 `path`.
@@ -75,7 +80,12 @@ Get the amount of untracked files in the git repository at the given
 The `callback` will be called with two arguments: An optional error
 object and a number representing the amount of untracked files.
 
-#### `untrackedSync(path)`
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `untrackedSync(path[, options])`
 
 Synchronous version of `untracked()`. 
 
@@ -83,7 +93,7 @@ Can throw error. This typically happens if you are running a too old
 version of Node.js (< 0.12), if git isnt found or if the path isn't 
 a git repository.
 
-#### `dirty(path, callback)`
+#### `dirty(path[, options], callback)`
 
 Get the amount of dirty files in the git repository at the given
 `path`.
@@ -91,7 +101,12 @@ Get the amount of dirty files in the git repository at the given
 The `callback` will be called with two arguments: An optional error
 object and a number representing the amount of dirty files.
 
-#### `dirtySync(path)`
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `dirtySync(path[, options])`
 
 Synchronous version of `dirty() `. 
 
@@ -99,7 +114,7 @@ Can throw error. This typically happens if you are running a too old
 version of Node.js (< 0.12), if git isnt found or if the path isn't 
 a git repository.
 
-#### `branch(path, callback)`
+#### `branch(path[, options], callback)`
 
 Get the currently checked out branch in the git repository at the given
 `path`.
@@ -109,11 +124,16 @@ object and a string with the branch name.
 
 If the branch name cannot be found, a falsy value will be returned.
 
-#### `branchSync(path)`
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `branchSync(path[, options])`
 
 Synchronous version of `branch()`. Returns null if no branch is set.
 
-#### `ahead(path, callback)`
+#### `ahead(path[, options], callback)`
 
 Get the amount of commits the current branch in the git repository at
 the given `path` is ahead of its remote.
@@ -124,13 +144,18 @@ of its remote.
 
 If the number cannot be determined, `NaN` will be returned instead.
 
-#### `aheadSync(path)`
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `aheadSync(path[, options])`
 
 Synchronous version of `ahead()`.
 
 If the number cannot be determined, `NaN` will be returned instead.
 
-#### `commit(path, callback)`
+#### `commit(path[, options], callback)`
 
 Get the short-hash (e.g. `7b0a3ab`) for the latest commit at `HEAD` in
 the git repository at the given `path`.
@@ -138,7 +163,12 @@ the git repository at the given `path`.
 The `callback` will be called with two arguments: An optional error
 object and a string containing the short-hash.
 
-#### `commitSync(path)`
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `commitSync(path[, options])`
 
 Synchronous version of `commit()`. 
 
@@ -146,7 +176,7 @@ Can throw error. This typically happens if you are running a too old
 version of Node.js (< 0.12), if git isnt found or if the path isn't 
 a git repository.
 
-#### `stashes(path, callback)`
+#### `stashes(path[, options], callback)`
 
 Get the amount of stashed changes in the git repository at the given
 `path`.
@@ -154,7 +184,12 @@ Get the amount of stashed changes in the git repository at the given
 The `callback` will be called with two arguments: An optional error
 object and a number representing the amount of stashed changes.
 
-#### `stashesSync(path)`
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `stashesSync(path[, options])`
 
 Synchronous version of `stashes()`. 
 
