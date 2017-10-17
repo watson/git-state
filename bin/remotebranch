@@ -1,0 +1,4 @@
+set -e
+branch=`git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null`
+echo $branch
+exit 0

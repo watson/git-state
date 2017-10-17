@@ -1,0 +1,6 @@
+set -e
+branch=`git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null`
+behind=`git rev-list HEAD..$branch | wc -l | awk '{print $1}'`
+echo $behind
+[ "$behind" != "0" ] && exit 1
+exit 0

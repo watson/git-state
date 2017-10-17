@@ -53,8 +53,9 @@ optional error object and a result object.
 The result object contains the following properties:
 
 - `branch` - The currently checked out branch
-- `ahead` - The amount of commits the current branch is ahead of the
-  remote (may be `NaN` if there for instance is no remote)
+- `remoteBranch` - The remote tracking branch of the currently checked out branch
+- `ahead` - The amount of commits the current branch is ahead of the remote (may be `NaN` if there for instance is no remote)
+- `behind` - The amount of commits the current branch is behind of the remote (may be `NaN` if there for instance is no remote)
 - `dirty` - The number of dirty files
 - `untracked` - The number of untracked files
 - `stashes` - The number of stored stashes
@@ -133,6 +134,25 @@ Supports the following `options`:
 
 Synchronous version of `branch()`. Returns null if no branch is set.
 
+#### `remoteBranch(path[, options], callback)`
+
+Get the remote for the currently checked out branch in the git 
+repository at the given `path`.
+
+The `callback` will be called with two arguments: An optional error
+object and a string with the remote name.
+
+If the branch name cannot be found, a falsy value will be returned.
+
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `remoteBranchSync(path[, options])`
+
+Synchronous version of `remoteBranch()`. Returns null if no branch is set.
+
 #### `ahead(path[, options], callback)`
 
 Get the amount of commits the current branch in the git repository at
@@ -152,6 +172,28 @@ Supports the following `options`:
 #### `aheadSync(path[, options])`
 
 Synchronous version of `ahead()`.
+
+If the number cannot be determined, `NaN` will be returned instead.
+
+#### `behind(path[, options], callback)`
+
+Get the amount of commits the current branch in the git repository at
+the given `path` is behind of its remote.
+
+The `callback` will be called with two arguments: An optional error
+object and a number indicating the amount of commits the branch is behind
+of its remote.
+
+If the number cannot be determined, `NaN` will be returned instead.
+
+Supports the following `options`:
+
+- `maxBuffer` - largest amount of data (in bytes) allowed on stdout or
+  stderr - if exceeded child process is killed (default: `200*1024`)
+
+#### `behindSync(path[, options])`
+
+Synchronous version of `behind()`.
 
 If the number cannot be determined, `NaN` will be returned instead.
 

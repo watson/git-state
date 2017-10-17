@@ -31,9 +31,15 @@ test('#check()', function (t) {
   var dir = process.cwd()
   git.check(dir, function (err, result) {
     t.error(err)
-    t.deepEqual(Object.keys(result), ['branch', 'ahead', 'dirty', 'untracked', 'stashes'])
+    t.deepEqual(Object.keys(result), ['branch', 'remoteBranch', 'ahead', 'behind', 'dirty', 'untracked', 'stashes'])
     t.equal(typeof result.branch, 'string')
+    if (result.remoteBranch == null) { // testing locally has a branch, CI is in detached head state.
+      t.notOk(result.remoteBranch)
+    } else {
+      t.equal(typeof result.remoteBranch, 'string')
+    }
     t.equal(typeof result.ahead, 'number')
+    t.equal(typeof result.behind, 'number')
     t.equal(typeof result.dirty, 'number')
     t.equal(typeof result.untracked, 'number')
     t.equal(typeof result.stashes, 'number')
@@ -50,9 +56,15 @@ test('#checkSync()', function (t) {
   var dir = process.cwd()
   try {
     var result = git.checkSync(dir)
-    t.deepEqual(Object.keys(result), ['branch', 'ahead', 'dirty', 'untracked', 'stashes'])
+    t.deepEqual(Object.keys(result), ['branch', 'remoteBranch', 'ahead', 'behind', 'dirty', 'untracked', 'stashes'])
     t.equal(typeof result.branch, 'string')
+    if (result.remoteBranch == null) { // testing locally has a branch, CI is in detached head state.
+      t.notOk(result.remoteBranch)
+    } else {
+      t.equal(typeof result.remoteBranch, 'string')
+    }
     t.equal(typeof result.ahead, 'number')
+    t.equal(typeof result.behind, 'number')
     t.equal(typeof result.dirty, 'number')
     t.equal(typeof result.untracked, 'number')
     t.equal(typeof result.stashes, 'number')
@@ -169,6 +181,49 @@ test('#branchSync() with maxBuffer', function (t) {
   t.end()
 })
 
+test('#remoteBranch()', function (t) {
+  var dir = process.cwd()
+  git.remoteBranch(dir, function (err, result) {
+    t.error(err)
+    if (result == null) { // testing locally has a branch, CI is in detached head state.
+      t.notOk(result)
+    } else {
+      t.equal(typeof result, 'string')
+    }
+    t.end()
+  })
+})
+
+// TODO: Find way to test this as currently none of the buffer is used
+// test('#remoteBranch() with maxBuffer', function (t) {
+//   var dir = process.cwd()
+//   git.remoteBranch(dir, {maxBuffer: 1}, testMaxBuffer(t))
+// })
+
+test('#remoteBranchSync()', function (t) {
+  var dir = process.cwd()
+  try {
+    var result = git.remoteBranchSync(dir)
+    if (result == null) { // testing locally has a branch, CI is in detached head state.
+      t.notOk(result)
+    } else {
+      t.equal(typeof result, 'string')
+    }
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
+})
+
+// TODO: Find way to test this as currently none of the buffer is used
+// test('#remoteBranchSync() with maxBuffer', function (t) {
+//   var dir = process.cwd()
+//   t.throws(function () {
+//     git.remoteBranchSync(dir, {maxBuffer: 1})
+//   }, /ENOBUFS/)
+//   t.end()
+// })
+
 test('#ahead()', function (t) {
   var dir = process.cwd()
   git.ahead(dir, function (err, result) {
@@ -200,6 +255,41 @@ test('#aheadSync()', function (t) {
 //   var dir = process.cwd()
 //   t.throws(function () {
 //     git.aheadSync(dir, {maxBuffer: 1})
+//   }, /ENOBUFS/)
+//   t.end()
+// })
+
+test('#behind()', function (t) {
+  var dir = process.cwd()
+  git.behind(dir, function (err, result) {
+    t.error(err)
+    t.equal(typeof result, 'number')
+    t.end()
+  })
+})
+
+// TODO: Find way to test this as currently none of the buffer is used
+// test('#behind() with maxBuffer', function (t) {
+//   var dir = process.cwd()
+//   git.behind(dir, {maxBuffer: 1}, testMaxBuffer(t))
+// })
+
+test('#behindSync()', function (t) {
+  var dir = process.cwd()
+  try {
+    var result = git.behindSync(dir)
+    t.equal(typeof result, 'number')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
+})
+
+// TODO: Find way to test this as currently none of the buffer is used
+// test('#behindSync() with maxBuffer', function (t) {
+//   var dir = process.cwd()
+//   t.throws(function () {
+//     git.behindSync(dir, {maxBuffer: 1})
 //   }, /ENOBUFS/)
 //   t.end()
 // })
