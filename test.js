@@ -33,7 +33,7 @@ test('#check()', function (t) {
     t.error(err)
     t.deepEqual(Object.keys(result), ['branch', 'remoteBranch', 'ahead', 'behind', 'dirty', 'untracked', 'stashes'])
     t.equal(typeof result.branch, 'string')
-    if (result == null) { //testing locally has a branch, CI is in detached head state.
+    if (result == null) { // testing locally has a branch, CI is in detached head state.
       t.notOk(result.remoteBranch)
     } else {
       t.equal(typeof result.remoteBranch, 'string')
@@ -58,7 +58,7 @@ test('#checkSync()', function (t) {
     var result = git.checkSync(dir)
     t.deepEqual(Object.keys(result), ['branch', 'remoteBranch', 'ahead', 'behind', 'dirty', 'untracked', 'stashes'])
     t.equal(typeof result.branch, 'string')
-    if (result == null) { //testing locally has a branch, CI is in detached head state.
+    if (result == null) { // testing locally has a branch, CI is in detached head state.
       t.notOk(result.remoteBranch)
     } else {
       t.equal(typeof result.remoteBranch, 'string')
