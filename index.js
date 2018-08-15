@@ -88,6 +88,7 @@ exports.branch = function branch (repo, opts, cb) {
 
   exec('git show-ref >' + nullPath + ' 2>&1 && git rev-parse --abbrev-ref HEAD', {cwd: repo, maxBuffer: opts.maxBuffer}, function (err, stdout, stderr) {
     if (err) {
+      if (err.code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') return cb(err)
       if (err.message === 'stdout maxBuffer exceeded') return cb(err)
       return cb() // most likely the git repo doesn't have any commits yet
     }

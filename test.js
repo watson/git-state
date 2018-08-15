@@ -300,7 +300,11 @@ test('#messageSync()', function (t) {
 function testMaxBuffer (t) {
   return function (err) {
     t.ok(err)
-    t.equal(err.message, 'stdout maxBuffer exceeded')
+    if (err.code) {
+      t.equal(err.code, 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER')
+    } else {
+      t.equal(err.message, 'stdout maxBuffer exceeded')
+    }
     t.end()
   }
 }
