@@ -2,13 +2,14 @@
 
 Get the current state of any git repository.
 
+[![npm](https://img.shields.io/npm/v/git-state.svg)](https://www.npmjs.com/package/git-state)
 [![Build status](https://travis-ci.org/watson/git-state.svg?branch=master)](https://travis-ci.org/watson/git-state)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 ## Installation
 
 ```
-npm install git-state
+npm install git-state --save
 ```
 
 ## Usage
@@ -66,10 +67,10 @@ Supports the following `options`:
 
 #### `checkSync(path[, options])`
 
-Synchronous version of `check()`. 
+Synchronous version of `check()`.
 
-Can throw error. This typically happens if you are running a too old 
-version of Node.js (< 0.12), if git isnt found or if the path isn't 
+Can throw error. This typically happens if you are running a too old
+version of Node.js (< 0.12), if git isn't found or if the path isn't
 a git repository.
 
 #### `untracked(path[, options], callback)`
@@ -87,10 +88,10 @@ Supports the following `options`:
 
 #### `untrackedSync(path[, options])`
 
-Synchronous version of `untracked()`. 
+Synchronous version of `untracked()`.
 
-Can throw error. This typically happens if you are running a too old 
-version of Node.js (< 0.12), if git isnt found or if the path isn't 
+Can throw error. This typically happens if you are running a too old
+version of Node.js (< 0.12), if git isn't found or if the path isn't
 a git repository.
 
 #### `dirty(path[, options], callback)`
@@ -108,10 +109,10 @@ Supports the following `options`:
 
 #### `dirtySync(path[, options])`
 
-Synchronous version of `dirty() `. 
+Synchronous version of `dirty() `.
 
-Can throw error. This typically happens if you are running a too old 
-version of Node.js (< 0.12), if git isnt found or if the path isn't 
+Can throw error. This typically happens if you are running a too old
+version of Node.js (< 0.12), if git isn't found or if the path isn't
 a git repository.
 
 #### `branch(path[, options], callback)`
@@ -170,10 +171,10 @@ Supports the following `options`:
 
 #### `commitSync(path[, options])`
 
-Synchronous version of `commit()`. 
+Synchronous version of `commit()`.
 
-Can throw error. This typically happens if you are running a too old 
-version of Node.js (< 0.12), if git isnt found or if the path isn't 
+Can throw error. This typically happens if you are running a too old
+version of Node.js (< 0.12), if git isn't found or if the path isn't
 a git repository.
 
 #### `stashes(path[, options], callback)`
@@ -191,10 +192,10 @@ Supports the following `options`:
 
 #### `stashesSync(path[, options])`
 
-Synchronous version of `stashes()`. 
+Synchronous version of `stashes()`.
 
-Can throw error. This typically happens if you are running a too old 
-version of Node.js (< 0.12), if git isnt found or if the path isn't 
+Can throw error. This typically happens if you are running a too old
+version of Node.js (< 0.12), if git isn't found or if the path isn't
 a git repository.
 
 #### `message(path[, options], callback)`
@@ -233,4 +234,4 @@ fact this is exactly what the
 
 ## License
 
-MIT
+[MIT](LICENSE)
