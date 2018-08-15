@@ -272,6 +272,31 @@ test('#stashesSync()', function (t) {
 //   t.end()
 // })
 
+test('#message()', function (t) {
+  var dir = process.cwd()
+  git.message(dir, function (err, result) {
+    t.error(err)
+    console.log(JSON.stringify(result))
+    t.equal(typeof result, 'string')
+    t.ok(result.length > 0, 'message should be longer than 0 bytes')
+    t.ok(/^[^\s].*[^\s]$/.test(result), 'should not have leading or trailing whitespace')
+    t.end()
+  })
+})
+
+test('#messageSync()', function (t) {
+  var dir = process.cwd()
+  try {
+    var result = git.messageSync(dir)
+    t.equal(typeof result, 'string')
+    t.ok(result.length > 0, 'message should be longer than 0 bytes')
+    t.ok(/^[^\s].*[^\s]$/.test(result), 'should not have leading or trailing whitespace')
+  } catch (err) {
+    t.error(err)
+  }
+  t.end()
+})
+
 function testMaxBuffer (t) {
   return function (err) {
     t.ok(err)

@@ -148,6 +148,16 @@ exports.stashes = function stashes (repo, opts, cb) {
   })
 }
 
+exports.message = function message (repo, opts, cb) {
+  if (typeof opts === 'function') return exports.message(repo, {}, opts)
+  opts = opts || {}
+
+  exec('git log -1 --pretty=%B', {cwd: repo, maxBuffer: opts.maxBuffer}, function (err, stdout, stderr) {
+    if (err) return cb(err)
+    cb(null, stdout.toString().trim())
+  })
+}
+
 //* SYNC methods *//
 exports.untrackedSync = function untrackedSync (repo, opts) {
   return statusSync(repo, opts).untracked
@@ -206,4 +216,10 @@ exports.stashesSync = function stashesSync (repo, opts) {
   var stdout = execSync('git stash list', {cwd: repo, maxBuffer: opts.maxBuffer}).toString()
   var stashes = stdout.trim().split(EOL).filter(truthy)
   return stashes.length
+}
+
+// Throws error
+exports.messageSync = function messageSync (repo, opts) {
+  opts = opts || {}
+  return execSync('git log -1 --pretty=%B', {cwd: repo, maxBuffer: opts.maxBuffer}).toString().trim()
 }

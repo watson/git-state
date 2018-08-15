@@ -197,6 +197,21 @@ Can throw error. This typically happens if you are running a too old
 version of Node.js (< 0.12), if git isnt found or if the path isn't 
 a git repository.
 
+#### `message(path[, options], callback)`
+
+Get the commit message of the latest commit.
+
+The `callback` will be called with two arguments: An optional error
+object and a string containing the commit message.
+
+#### `messageSync(path[, options])`
+
+Synchronous version of `message()`.
+
+Can throw error. This typically happens if you are running a too old
+version of Node.js (< 0.12), if git isn't found or if the path isn't
+a git repository.
+
 ## Shell implementation
 
 Inside the [`bin`](https://github.com/watson/git-state/tree/master/bin)
